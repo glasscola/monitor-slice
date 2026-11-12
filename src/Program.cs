@@ -5,6 +5,7 @@ using System.Windows.Forms;
 namespace MonitorSlice {
 static class Program {
  [STAThread] static void Main(string[] args){try{try{Native.SetProcessDpiAwareness(2);}catch{}Application.EnableVisualStyles();Application.SetCompatibleTextRenderingDefault(false);
+  if(Array.IndexOf(args,"--carry-test")>=0){CarryTests.Run();return;}
   if(Array.IndexOf(args,"--setup-request-install")>=0){SetupFlow.Run("install");return;}
   if(Array.IndexOf(args,"--setup-rollback-test")>=0){string config=Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData),"MonitorSlice","Driver","vdd_settings.xml");string before=File.ReadAllText(config);bool injected=false;try{SetupFlow.Run("test-failure");}catch(Exception error){injected=error.Message.Contains("실패 주입");}if(!injected||File.ReadAllText(config)!=before||!VirtualSession.Ready)throw new Exception("설치 자동 복구 검사 실패");File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"evidence","setup-rollback-test.txt"),"Injected failure rolled back; original configuration and four devices retained.");return;}
   if(Array.IndexOf(args,"--setup-cycle-test")>=0){var results=new System.Collections.Generic.List<object>();foreach(string op in new[]{"install","install","recover","remove","install"}){SetupFlow.Run(op);bool ready=VirtualSession.Ready;if(op!="remove"&&!ready)throw new Exception("설치 후 장치 확인 실패");if(op=="remove"&&Displays.Virtual().Count!=0)throw new Exception("제거 후 장치 잔존");results.Add(new{operation=op,ready=ready,virtualDisplays=Displays.Virtual().Count});}File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"evidence","setup-cycle-test.json"),new System.Web.Script.Serialization.JavaScriptSerializer().Serialize(results));return;}
@@ -18,6 +19,6 @@ static class Program {
   if(Array.IndexOf(args,"--virtual-test")>=0){VirtualTests.Run();return;}
   if(Array.IndexOf(args,"--mode-check")>=0){VirtualTests.CheckModes();return;}
   using(var mutex=new Mutex(false,"Local\\"+"Monitor"+"Split-native-v2")){if(!mutex.WaitOne(0)){MessageBox.Show("Monitor Slice가 이미 실행 중입니다.");return;}try{Application.Run(new MainForm());}finally{mutex.ReleaseMutex();}}}
- catch(Exception ex){try{Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"evidence"));File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"evidence","error-"+DateTime.UtcNow.ToString("yyyyMMdd-HHmmss")+".txt"),ex.ToString());}catch{}if(Array.IndexOf(args,"--setup-cycle-test")<0&&Array.IndexOf(args,"--virtual-test")<0&&Array.IndexOf(args,"--install-driver")<0)MessageBox.Show(ex.Message,"Monitor Slice 오류");Environment.ExitCode=1;}}
+ catch(Exception ex){try{Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"evidence"));File.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"evidence","error-"+DateTime.UtcNow.ToString("yyyyMMdd-HHmmss")+".txt"),ex.ToString());}catch{}if(Array.IndexOf(args,"--carry-test")<0&&Array.IndexOf(args,"--setup-cycle-test")<0&&Array.IndexOf(args,"--virtual-test")<0&&Array.IndexOf(args,"--install-driver")<0)MessageBox.Show(ex.Message,"Monitor Slice 오류");Environment.ExitCode=1;}}
 }
 }

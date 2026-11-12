@@ -6,7 +6,7 @@ Windows 모니터 하나를 여러 가상 모니터로 나누는 데스크톱 �
 
 ## 다운로드와 사용
 
-[최신 릴리스](https://github.com/glasscola/monitor-slice/releases/latest)에서 `MonitorSlice-v1.2.0-win-x64.zip`과 한국어 PDF 설명서를 다운로드하세요.
+[최신 릴리스](https://github.com/glasscola/monitor-slice/releases/latest)에서 `MonitorSlice-v1.3.0-win-x64.zip`과 한국어 PDF 설명서를 다운로드하세요.
 
 1. ZIP 전체를 쓰기 가능한 폴더에 압축 해제합니다.
 2. `MonitorSlice.exe`를 실행하고 **설치 · 자동 설정**을 누릅니다.
@@ -20,9 +20,13 @@ Windows 모니터 하나를 여러 가상 모니터로 나누는 데스크톱 �
 - 모니터 선택, 4칸·좌우·상하·위/아래가 넓은 3칸·전체 1칸
 - 이웃 영역을 직사각형으로 합치기와 되돌리기
 - 드라이버 설치·독립 장치 4개 구성·복구·제거
+- 분할할 모니터의 기존 아이콘·일반 창을 왼쪽 위 칸으로 이동하고 종료 시 원래 배치로 복원
+- 다른 물리 모니터의 아이콘·창 위치 유지
 - 바탕화면 아이콘 저장·복원과 비정상 종료 후 화면 복구
 
 하나의 Windows를 공유하며 별도 PC나 운영체제를 만드는 방식은 아닙니다. Windows 디스플레이 설정에는 실제·가상 모니터가 함께 표시됩니다.
+
+기존 아이콘을 첫 칸에 겹치지 않게 배치할 공간이 부족하면 분할을 취소하고 복원합니다. 이 경우 첫 칸이 넓은 배치를 고르세요. 일반 표시 창이 대상이며, 최소화된 창·관리자 권한 창·자체 위치를 강제하는 앱은 이동 동작이 다를 수 있습니다. 실행 중 직접 옮긴 기존 창도 종료 시 저장한 위치로 복원됩니다.
 
 ## 지원 환경과 설치 기록
 
@@ -47,6 +51,7 @@ Windows용 Visual Studio C++ Build Tools(C++20, Windows SDK)와 .NET Framework 4
 ## 검사
 
 ```powershell
+.\MonitorSlice.exe --carry-test
 .\MonitorSlice.exe --mode-check
 .\MonitorSlice.exe --virtual-test --full
 ```
