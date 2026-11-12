@@ -1,0 +1,15 @@
+# Build and local runtime state
+*.exe
+*.obj
+*.lib
+*.exp
+*.pdb
+*.dll
+!driver/package/VirtualDisplayDriver/MttVDD.dll
+data/
+evidence/
+dist/
+work/
+__pycache__/
+*.tmp
+*.bak

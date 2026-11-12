@@ -1,0 +1,9 @@
+*.pdf binary
+*.png binary
+*.dll binary
+*.cat binary
+*.inf binary
+*.cs text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+*.md text eol=lf
