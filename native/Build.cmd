@@ -11,5 +11,5 @@ if errorlevel 1 exit /b 1
 cd /d "%~dp0"
 set "captureOutput=..\MonitorSlice.Capture.dll"
 if not "%~1"=="" set "captureOutput=%~1"
-cl /nologo /std:c++20 /EHsc /O2 /MT /LD Capture.cpp Icons.cpp /link /OUT:"%captureOutput%" d3d11.lib dxgi.lib windowsapp.lib runtimeobject.lib user32.lib gdi32.lib ole32.lib oleaut32.lib shell32.lib uuid.lib
+cl /nologo /std:c++20 /EHsc /O2 /MT /LD Capture.cpp Icons.cpp DirectOutput.cpp /link /OUT:"%captureOutput%" d3d11.lib dxgi.lib windowsapp.lib runtimeobject.lib user32.lib gdi32.lib ole32.lib oleaut32.lib shell32.lib uuid.lib
 exit /b %errorlevel%

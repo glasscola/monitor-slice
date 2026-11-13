@@ -1,0 +1,7 @@
+using System;using System.IO;using System.Linq;using System.Drawing;using System.Diagnostics;using System.Threading;using System.Windows.Forms;using System.Web.Script.Serialization;
+namespace MonitorSlice {
+static class MirrorRecoveryTest {
+ public static void Child(){RecoveryGuard.Start();var d=Displays.All().First(x=>x.Attached&&!Displays.Virtual().Any(v=>v.Name==x.Name));var r=new Rectangle(d.Mode.X,d.Mode.Y,d.Mode.Width,d.Mode.Height);var session=new VirtualSession();session.Start(r,Layouts.Create("grid"),false);Thread.Sleep(500);Process.GetCurrentProcess().Kill();}
+ public static void Run(){var json=new JavaScriptSerializer();var before=json.Serialize(Ccd.Read(false));using(var child=Process.Start(new ProcessStartInfo(Application.ExecutablePath,"--mirror-crash-child"){UseShellExecute=false,CreateNoWindow=true})){if(!child.WaitForExit(60000))throw new Exception("복구 검사 프로세스 시간 초과");}var journal=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"data","virtual-recovery.json");for(int i=0;i<150&&File.Exists(journal);i++){Application.DoEvents();Thread.Sleep(100);}bool restored=!File.Exists(journal)&&json.Serialize(Ccd.Read(false))==before;string path=Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"evidence","mirror-recovery.json");Directory.CreateDirectory(Path.GetDirectoryName(path));File.WriteAllText(path,json.Serialize(new{Passed=restored,ForcedProcessExit=true,Restored=restored}));if(!restored)throw new Exception("강제 종료 후 자동 복구 실패");}
+}
+}
