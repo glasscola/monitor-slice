@@ -1,12 +1,12 @@
 ﻿# Monitor Slice 1.4.1 — 바탕화면 복제 분할
 
-[최신 다운로드 페이지](https://github.com/glasscola/monitor-slice/releases/latest) · [단일 EXE 다운로드](https://github.com/glasscola/monitor-slice/releases/download/v1.4.1/MonitorSlice-1.4.1.exe) · [한국어 PDF 설명서](https://github.com/glasscola/monitor-slice/releases/download/v1.4.1/MonitorSlice-User-Guide-ko.pdf)
+[최신 다운로드 페이지](https://github.com/glasscola/monitor-slice/releases/latest) · [전체 ZIP 다운로드](https://github.com/glasscola/monitor-slice/releases/download/v1.4.1/MonitorSlice-v1.4.1-win-x64.zip) · [한국어 PDF 설명서](https://github.com/glasscola/monitor-slice/releases/download/v1.4.1/MonitorSlice-User-Guide-ko.pdf)
 
 선택한 실제 모니터의 원래 바탕화면을 첫 칸에 축소 표시하고, 나머지 칸에 추가 가상 모니터를 표시합니다. 4분할은 원본 1개 + 가상 3개입니다. 기존 원본 창과 아이콘을 가상 화면으로 강제 이동하지 않습니다.
 
 ## 실행
 
-단일 파일 `MonitorSlice-1.4.1.exe`를 실행하면 필요한 앱·DLL·공식 서명된 드라이버를 `%LocalAppData%/MonitorSlice/1.4.1`에 준비하고 앱을 엽니다. 최초 실행 시 **설치 · 자동 설정**을 누르고 Windows 관리자 승인을 허용하세요. 이미 설치됐다면 바로 모니터와 배치를 고른 뒤 **분할 시작**을 누릅니다.
+`MonitorSlice-v1.4.1-win-x64.zip` 전체를 쓰기 가능한 새 폴더에 압축 해제하고, 폴더 안의 `MonitorSlice.exe`를 실행하세요. EXE·DLL·driver 폴더를 함께 유지해야 합니다. 최초 실행 시 **설치 · 자동 설정**을 누르고 Windows 관리자 승인을 허용하세요. 이미 설치됐다면 바로 모니터와 배치를 고른 뒤 **분할 시작**을 누릅니다.
 
 시작하면 설정 창은 최소화됩니다. 트레이 아이콘에서 설정 열기와 종료·복원을 사용할 수 있습니다. **Ctrl+Alt+F11**은 분할 종료·원래 화면 복원입니다. 종료 시 추가 가상 화면의 일반 창을 물리 화면으로 회수하고 기존 창·아이콘·모니터 구성을 복원합니다.
 
@@ -29,7 +29,7 @@
 
 ## 개발
 
-`native/Build.cmd`, `Build.ps1`, `BuildSingle.ps1` 순으로 빌드합니다. 자체 검사 명령은 `--mirror-test`, `--mirror-integration`, `--mirror-recovery-test`, `--gpu-bench`입니다. 통합 검사는 실제 화면과 포커스를 일시 변경합니다. runtime `data`, `evidence`는 개인 상태이므로 배포하지 않습니다.
+`native/Build.cmd`, `Build.ps1`, `Package.ps1` 순으로 빌드·패키징합니다. 자체 검사 명령은 `--mirror-test`, `--mirror-integration`, `--mirror-recovery-test`, `--gpu-bench`입니다. 통합 검사는 실제 화면과 포커스를 일시 변경합니다. runtime `data`, `evidence`는 개인 상태이므로 배포하지 않습니다.
 
 제3자 드라이버: VirtualDrivers/Virtual-Display-Driver, MttVDD 11.30.4.434. 공식 서명된 INF/DLL/CAT와 driver/LICENSE.txt는 원본을 유지합니다.
 
